@@ -7,20 +7,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/ll"
         android:orientation="horizontal">
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_provinces"
             android:layout_gravity="start"/>
-
-
         <Spinner
             android:id="@+id/spinner_cities"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll"
+        android:id="@+id/tv_city_id"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"/>
 
 
 </RelativeLayout>

@@ -2,10 +2,12 @@ package com.example.joancolmenero.provinceandcity2spinnersfromjson;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.joancolmenero.provinceandcity2spinnersfromjson.model.City;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> provincesList = new ArrayList<>();
     private ArrayList<String> citiesList = new ArrayList<>();
     private Map<String, ResponseJSON> responseJson;
+    private TextView tv_city_id;
 
 
     @Override
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
         spinner_city = findViewById(R.id.spinner_cities);
         spinner_province = findViewById(R.id.spinner_provinces);
+        tv_city_id = findViewById(R.id.tv_city_id);
     }
 
     private void createAdapter(){
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         spinner_city.setAdapter(cityAdapter);
 
         spinner_province.setOnItemSelectedListener(provinceListener);
+        spinner_city.setOnItemSelectedListener(citiesListener);
 
 
     }
@@ -100,6 +105,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             cityAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+    private AdapterView.OnItemSelectedListener citiesListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String citySelected = spinner_city.getItemAtPosition(position).toString();
+            String provinceSelected = spinner_province.getSelectedItem().toString();
+            for(Map.Entry<String, ResponseJSON> e : responseJson.entrySet())
+            {
+                if(e.getKey().equals(provinceSelected)){
+                    for(City c : e.getValue().getCity()){
+                        if(citySelected.equals(c.getCityName())){
+                            tv_city_id.setText(String.format("City id for %s is %s", citySelected, c.getCityId()));
+                        }
+                    }
+                }
+            }
         }
 
         @Override
